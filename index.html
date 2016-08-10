@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="movieApp">
+<head>
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/movieAngular.js"></script>
+    
+</head>
+<body ng-controller="movieController">
+    <div class="container container-fluid">
+    <div class="row">
+        <div class="well">
+            <form class="form-group">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" ng-model="userChoice" placeholder="Search Here">
+                        </div>
+                    </div>
+                </div>
+                <div id="searchOptions" class="dropdown col-md-2">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dLabel" ng-if="userChoice" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Search By: <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel"> 
+                        <li ng-click="searchOption('collection')"><a href="#">Collection</a></li>
+                        <li ng-click="searchOption('movie')"><a href="#">Movie</a></li>
+                        <li ng-click="searchOption('multi')"><a href="#">Everything</a></li>
+                        <li ng-click="searchOption('tv')"><a href="#">TV</a></li>
+                    </ul>
+                </div>
+                <button ng-click="getMovieStuff()" ng-class="{'btn-success' : userChoice && optionChosen, 'btn-danger' : !optionChosen}" class="btn btn-lg ">Find Movies</button>
+            </form>
+            <div id="genreOptions" class="dropdown col-md-2">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dLabel2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Genre List: <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" aria-labelledby="dLabel2">  
+                    <li ng-repeat="genre in genreArray" ng-click="genreSearch(genre.id)"><a href="#">{{genre.name}}</a></li>
+                </ul>
+            </div>
+            <div id="sortOptions" class="dropdown col-md-2">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dLabel2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By: <span class="caret"></span></button>
+
+                <ul class="dropdown-menu" aria-labelledby="dLabel2">  
+                    <li ng-click="sortOption('now_playing')"><a href="#">Now Playing</a></li>
+                    <li ng-click="sortOption('popular')"><a href="#">Popular</a></li>
+                    <li ng-click="sortOption('top_rated')"><a href="#">Top Rated</a></li>
+                    <li ng-click="sortOption('upcoming')"><a href="#">Upcoming</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div ng-repeat="movie in movieArray" class="col-sm-3 movie-poster">
+               <a href="#myModal"><img ng-src="{{imagePath}}{{movie.poster_path}}"></a><div ng-repeat="(key, value) in movie.genre_ids">{{value}}</div>
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+</html>
